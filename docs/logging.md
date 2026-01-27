@@ -46,6 +46,17 @@ setup_logging(
 )
 ```
 
+You can also pass a string path:
+
+```python
+from framework import setup_logging
+
+setup_logging(
+    level="INFO",
+    log_file="logs/agent.log"  # String paths are also supported
+)
+```
+
 ### Custom Format
 
 Customize the log message format:
@@ -86,6 +97,7 @@ disable_framework_logging()
 The logging configuration integrates seamlessly with the AgentRunner:
 
 ```python
+from pathlib import Path
 from framework import setup_logging, AgentRunner
 
 # Configure logging before running agents
@@ -111,6 +123,9 @@ setup_logging(level="DEBUG")
 In production, use INFO or WARNING level and log to files:
 
 ```python
+from pathlib import Path
+from framework import setup_logging
+
 setup_logging(
     level="INFO",
     log_file=Path("/var/log/agent/production.log")
@@ -154,6 +169,32 @@ Choose the appropriate log level for your messages:
 - **ERROR**: Error messages for serious problems
 - **CRITICAL**: Critical messages for severe errors that may cause shutdown
 
+## Error Handling
+
+The logging module validates log levels and raises `ValueError` for invalid levels:
+
+```python
+from framework import setup_logging
+
+try:
+    setup_logging(level="INVALID")  # Raises ValueError
+except ValueError as e:
+    print(f"Configuration error: {e}")
+    # Output: Invalid log level 'INVALID'. Valid levels are: CRITICAL, DEBUG, ERROR, INFO, WARNING
+```
+
+When creating log directories, the module will raise `PermissionError` or `OSError` if unable to create the directory:
+
+```python
+from pathlib import Path
+from framework import setup_logging
+
+try:
+    setup_logging(level="INFO", log_file=Path("/restricted/path/agent.log"))
+except PermissionError:
+    print("Cannot create log directory - permission denied")
+```
+
 ## Environment Variables
 
 You can also control logging via environment variables:
@@ -170,11 +211,15 @@ Then in your code:
 
 ```python
 import os
+from pathlib import Path
 from framework import setup_logging
+
+# Get environment variables with proper type handling
+log_file_env = os.getenv("ADEN_LOG_FILE")
 
 setup_logging(
     level=os.getenv("ADEN_LOG_LEVEL", "INFO"),
-    log_file=os.getenv("ADEN_LOG_FILE")
+    log_file=Path(log_file_env) if log_file_env else None
 )
 ```
 
@@ -186,9 +231,14 @@ Configure logging for the framework.
 
 **Parameters:**
 - `level` (str): Logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
-- `log_file` (Path, optional): File path to write logs to
+- `log_file` (Path | str, optional): File path to write logs to (accepts Path or string)
 - `format_string` (str, optional): Custom format string for log messages
 - `include_timestamp` (bool): Whether to include timestamps (default: True)
+
+**Raises:**
+- `ValueError`: If an invalid log level is provided
+- `PermissionError`: If unable to create log file directory
+- `OSError`: If unable to create log file directory
 
 ### `get_logger(name)`
 
@@ -206,6 +256,9 @@ Set log level for all framework loggers.
 
 **Parameters:**
 - `level` (str): Logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+
+**Raises:**
+- `ValueError`: If an invalid log level is provided
 
 ### `disable_framework_logging()`
 

@@ -32,6 +32,7 @@ from framework.logging_config import (
     get_logger,
     set_framework_log_level,
     disable_framework_logging,
+    VALID_LOG_LEVELS,
 )
 from framework.runner import AgentRunner, AgentOrchestrator
 
@@ -67,6 +68,7 @@ __all__ = [
     "get_logger",
     "set_framework_log_level",
     "disable_framework_logging",
+    "VALID_LOG_LEVELS",
     # Runner
     "AgentRunner",
     "AgentOrchestrator",

@@ -4,8 +4,6 @@ import json
 import logging
 import os
 from dataclasses import dataclass, field
-
-logger = logging.getLogger(__name__)
 from pathlib import Path
 from typing import TYPE_CHECKING, Callable, Any
 
@@ -23,6 +21,9 @@ from framework.runtime.execution_stream import EntryPointSpec
 
 if TYPE_CHECKING:
     from framework.runner.protocol import CapabilityResponse, AgentMessage
+
+# Module logger
+logger = logging.getLogger(__name__)
 
 
 @dataclass
