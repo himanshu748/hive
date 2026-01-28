@@ -75,6 +75,11 @@ python mcp_server.py
 | `web_search`           | Search the web (Google or Brave, auto-detected) |
 | `web_scrape`           | Scrape and extract content from webpages       |
 | `pdf_read`             | Read and extract text from PDF files           |
+| `csv_read`             | Read a CSV file and return its contents        |
+| `csv_write`            | Write data to a new CSV file                   |
+| `csv_append`           | Append rows to an existing CSV file            |
+| `csv_info`             | Get metadata about a CSV file                  |
+| `csv_sql`              | Query a CSV file using SQL (DuckDB)            |
 
 ## Project Structure
 
@@ -96,7 +101,8 @@ tools/
 │       │   └── execute_command_tool.py
 │       ├── web_search_tool/
 │       ├── web_scrape_tool/
-│       └── pdf_read_tool/
+│       ├── pdf_read_tool/
+│       └── csv_tool/
 ├── tests/                   # Test suite
 ├── mcp_server.py            # MCP server entry point
 ├── README.md
