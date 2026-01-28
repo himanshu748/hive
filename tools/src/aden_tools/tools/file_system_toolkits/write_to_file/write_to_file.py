@@ -1,4 +1,5 @@
 import os
+from typing import Any
 
 from mcp.server.fastmcp import FastMCP
 
@@ -16,7 +17,7 @@ def register_tools(mcp: FastMCP) -> None:
         agent_id: str,
         session_id: str,
         append: bool = False,
-    ) -> dict:
+    ) -> dict[str, Any]:
         """
         Purpose
             Create a new file or append content to an existing file.

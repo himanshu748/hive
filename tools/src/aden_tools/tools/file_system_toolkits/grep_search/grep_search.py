@@ -1,5 +1,6 @@
 import os
 import re
+from typing import Any
 
 from mcp.server.fastmcp import FastMCP
 
@@ -17,7 +18,7 @@ def register_tools(mcp: FastMCP) -> None:
         agent_id: str,
         session_id: str,
         recursive: bool = False,
-    ) -> dict:
+    ) -> dict[str, Any]:
         """
         Search for a pattern in a file or directory within the session sandbox.
 
