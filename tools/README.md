@@ -57,14 +57,20 @@ python mcp_server.py
 
 ## Available Tools
 
-| Tool           | Description                              |
-| -------------- | ---------------------------------------- |
-| `example_tool` | Template tool demonstrating the pattern  |
-| `file_read`    | Read contents of local files             |
-| `file_write`   | Write content to local files             |
-| `web_search`   | Search the web using Brave Search API    |
-| `web_scrape`   | Scrape and extract content from webpages |
-| `pdf_read`     | Read and extract text from PDF files     |
+| Tool                   | Description                              |
+| ---------------------- | ---------------------------------------- |
+| `example_tool`         | Template tool demonstrating the pattern  |
+| `view_file`            | Read contents of local files             |
+| `write_to_file`        | Write content to local files             |
+| `list_dir`             | List directory contents                  |
+| `replace_file_content` | Replace content in files                 |
+| `apply_diff`           | Apply diff patches to files              |
+| `apply_patch`          | Apply unified patches to files           |
+| `grep_search`          | Search file contents with regex          |
+| `execute_command_tool` | Execute shell commands                   |
+| `web_search`           | Search the web using Brave Search API    |
+| `web_scrape`           | Scrape and extract content from webpages |
+| `pdf_read`             | Read and extract text from PDF files     |
 
 ## Project Structure
 
@@ -75,8 +81,15 @@ tools/
 │   ├── utils/               # Utility functions
 │   └── tools/               # Tool implementations
 │       ├── example_tool/
-│       ├── file_read_tool/
-│       ├── file_write_tool/
+│       ├── file_system_toolkits/  # File operation tools
+│       │   ├── view_file/
+│       │   ├── write_to_file/
+│       │   ├── list_dir/
+│       │   ├── replace_file_content/
+│       │   ├── apply_diff/
+│       │   ├── apply_patch/
+│       │   ├── grep_search/
+│       │   └── execute_command_tool/
 │       ├── web_search_tool/
 │       ├── web_scrape_tool/
 │       └── pdf_read_tool/
