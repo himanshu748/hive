@@ -1,13 +1,16 @@
 import os
 import re
+from typing import Any
+
 from mcp.server.fastmcp import FastMCP
-from ..security import get_secure_path, WORKSPACES_DIR
+
+from ..security import WORKSPACES_DIR, get_secure_path
 
 def register_tools(mcp: FastMCP) -> None:
     """Register grep search tools with the MCP server."""
 
     @mcp.tool()
-    def grep_search(path: str, pattern: str, workspace_id: str, agent_id: str, session_id: str, recursive: bool = False) -> dict:
+    def grep_search(path: str, pattern: str, workspace_id: str, agent_id: str, session_id: str, recursive: bool = False) -> dict[str, Any]:
         """
         Search for a pattern in a file or directory within the session sandbox.
 
@@ -82,4 +85,3 @@ def register_tools(mcp: FastMCP) -> None:
         except Exception as e:
             # 3. Generic Fallback
             return {"error": f"Failed to perform grep search: {str(e)}"}
-

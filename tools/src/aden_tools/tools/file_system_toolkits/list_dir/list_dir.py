@@ -1,12 +1,15 @@
 import os
+from typing import Any
+
 from mcp.server.fastmcp import FastMCP
+
 from ..security import get_secure_path
 
 def register_tools(mcp: FastMCP) -> None:
     """Register directory listing tools with the MCP server."""
 
     @mcp.tool()
-    def list_dir(path: str, workspace_id: str, agent_id: str, session_id: str) -> dict:
+    def list_dir(path: str, workspace_id: str, agent_id: str, session_id: str) -> dict[str, Any]:
         """
         Purpose
             List the contents of a directory within the session sandbox.

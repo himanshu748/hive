@@ -1,12 +1,15 @@
 import os
+from typing import Any
+
 from mcp.server.fastmcp import FastMCP
+
 from ..security import get_secure_path
 
 def register_tools(mcp: FastMCP) -> None:
     """Register file view tools with the MCP server."""
 
     @mcp.tool()
-    def view_file(path: str, workspace_id: str, agent_id: str, session_id: str) -> dict:
+    def view_file(path: str, workspace_id: str, agent_id: str, session_id: str) -> dict[str, Any]:
         """
         Purpose
             Read the content of a file within the session sandbox.
