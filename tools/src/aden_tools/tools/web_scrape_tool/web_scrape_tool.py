@@ -8,6 +8,7 @@ Respect robots.txt by default for ethical scraping.
 
 from __future__ import annotations
 
+from functools import lru_cache
 from typing import Any
 from urllib.parse import urljoin, urlparse
 from urllib.robotparser import RobotFileParser
@@ -15,9 +16,6 @@ from urllib.robotparser import RobotFileParser
 import httpx
 from bs4 import BeautifulSoup
 from fastmcp import FastMCP
-
-# Cache for robots.txt parsers (domain -> parser)
-_robots_cache: dict[str, RobotFileParser | None] = {}
 
 # User-Agent for the scraper - identifies as a bot for transparency
 USER_AGENT = "AdenBot/1.0 (https://adenhq.com; web scraping tool)"
@@ -30,9 +28,13 @@ BROWSER_USER_AGENT = (
 )
 
 
+@lru_cache(maxsize=1000)
 def _get_robots_parser(base_url: str, timeout: float = 10.0) -> RobotFileParser | None:
     """
     Fetch and parse robots.txt for a domain.
+
+    Uses an LRU cache (maxsize=1000) to prevent unbounded memory growth for long-running
+    agents while maintaining performance for frequently accessed domains.
 
     Args:
         base_url: Base URL of the domain (e.g., 'https://example.com')
@@ -41,9 +43,6 @@ def _get_robots_parser(base_url: str, timeout: float = 10.0) -> RobotFileParser 
     Returns:
         RobotFileParser if robots.txt exists and was parsed, None otherwise
     """
-    if base_url in _robots_cache:
-        return _robots_cache[base_url]
-
     robots_url = f"{base_url}/robots.txt"
     parser = RobotFileParser()
 
@@ -56,11 +55,9 @@ def _get_robots_parser(base_url: str, timeout: float = 10.0) -> RobotFileParser 
         )
         if response.status_code == 200:
             parser.parse(response.text.splitlines())
-            _robots_cache[base_url] = parser
             return parser
         else:
             # No robots.txt or error (4xx/5xx) - allow all by convention
-            _robots_cache[base_url] = None
             return None
     except (httpx.TimeoutException, httpx.RequestError):
         # Can't fetch robots.txt - allow but don't cache (might be temporary)
