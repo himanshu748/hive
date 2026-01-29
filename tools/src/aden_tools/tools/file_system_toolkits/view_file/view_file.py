@@ -56,11 +56,17 @@ def register_tools(mcp: FastMCP) -> None:
             if not os.path.isfile(secure_path):
                 return {"error": f"Path is not a file: {path}"}
 
-            with open(secure_path, encoding=encoding) as f:
-                content = f.read()
+            # Check file size before reading to provide helpful feedback
+            file_size = os.path.getsize(secure_path)
 
-            if len(content.encode(encoding)) > max_size:
-                content = content[:max_size]
+            # Read only up to max_size to prevent OOM on large files
+            with open(secure_path, encoding=encoding) as f:
+                content = f.read(max_size)
+
+                # Check if file was truncated by trying to read one more char
+                was_truncated = bool(f.read(1))
+
+            if was_truncated:
                 content += "\n\n[... Content truncated due to size limit ...]"
 
             return {
@@ -69,6 +75,8 @@ def register_tools(mcp: FastMCP) -> None:
                 "content": content,
                 "size_bytes": len(content.encode("utf-8")),
                 "lines": len(content.splitlines()),
+                "file_size_bytes": file_size,
+                "truncated": was_truncated,
             }
         except Exception as e:
             return {"error": f"Failed to read file: {str(e)}"}
