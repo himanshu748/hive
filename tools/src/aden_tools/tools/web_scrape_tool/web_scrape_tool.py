@@ -8,9 +8,9 @@ Respect robots.txt by default for ethical scraping.
 
 from __future__ import annotations
 
+from functools import lru_cache
 from typing import Any
 from urllib.parse import urljoin, urlparse
-from functools import lru_cache
 from urllib.robotparser import RobotFileParser
 
 import httpx
