@@ -109,6 +109,18 @@ Skills are also available in Cursor. To enable:
 3. Restart Cursor to load the MCP servers from `.cursor/mcp.json`
 4. Type `/` in Agent chat and search for skills (e.g., `/building-agents-construction`)
 
+### Antigravity IDE Support
+
+Skills and MCP servers are also available in [Antigravity IDE](https://antigravity.google/) (Google's AI-powered IDE). To enable:
+
+1. Open the project in Antigravity IDE (repo root as project root)
+2. In the agent panel, open **Manage MCP Servers** and use **View raw config**
+3. Point Antigravity to `.antigravity/mcp_config.json` (or merge its contents into your user `mcp_config.json` and set `cwd` to your repo paths)
+4. Restart or reload MCP so the **agent-builder** and **tools** servers connect
+5. Skills are available under `.antigravity/skills/` (symlinks to `.claude/skills/`)
+
+See [docs/antigravity-setup.md](docs/antigravity-setup.md) for full setup and troubleshooting.
+
 ## Features
 
 - **Goal-Driven Development** - Define objectives in natural language; the coding agent generates the agent graph and connection code to achieve them
@@ -183,6 +195,9 @@ Aden Hive provides a list of featured agents that you can use and build on top o
 ### Run an agent shared by others
 Put the agent in `exports/` and run `PYTHONPATH=core:exports python -m your_agent_name run --input '{...}'`
 
+## Development
+
+### Python Agent Development
 
 For building and running goal-driven agents with the framework:
 
