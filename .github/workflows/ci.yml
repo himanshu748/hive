@@ -27,7 +27,10 @@ jobs:
         run: |
           cd core
           pip install -e .
-          pip install -r requirements-dev.txt
+
+      # Match the Ruff release supported by this branch's development setup.
+      - name: Install Ruff
+        run: pip install ruff==0.14.14
 
       - name: Ruff lint
         run: |
@@ -58,7 +61,6 @@ jobs:
         run: |
           cd core
           pip install -e .
-          pip install -r requirements-dev.txt
 
       - name: Run tests
         run: |
@@ -103,7 +105,6 @@ jobs:
         run: |
           cd core
           pip install -e .
-          pip install -r requirements-dev.txt
 
       - name: Validate exported agents
         run: |

@@ -86,14 +86,14 @@ tools/
 │   └── tools/               # Tool implementations
 │       ├── example_tool/
 │       ├── file_system_toolkits/  # File operation tools
-│       │   ├── view_file.py
-│       │   ├── write_to_file.py
-│       │   ├── list_dir.py
-│       │   ├── replace_file_content.py
-│       │   ├── apply_diff.py
-│       │   ├── apply_patch.py
-│       │   ├── grep_search.py
-│       │   └── execute_command_tool.py
+│       │   ├── view_file/
+│       │   ├── write_to_file/
+│       │   ├── list_dir/
+│       │   ├── replace_file_content/
+│       │   ├── apply_diff/
+│       │   ├── apply_patch/
+│       │   ├── grep_search/
+│       │   └── execute_command_tool/
 │       ├── web_search_tool/
 │       ├── web_scrape_tool/
 │       └── pdf_read_tool/
