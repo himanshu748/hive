@@ -6,6 +6,9 @@ on:
 
 jobs:
   check-requirements:
+    # Personal forks may disable issues; issue assignment cannot be enforced there.
+    # Keep the upstream repository policy unchanged.
+    if: ${{ !github.event.repository.fork || github.event.repository.has_issues }}
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
