@@ -1,4 +1,5 @@
 import os
+from typing import Any
 
 from mcp.server.fastmcp import FastMCP
 
@@ -19,7 +20,7 @@ def register_tools(mcp: FastMCP) -> None:
         session_id: str,
         encoding: str = "utf-8",
         max_size: int = 10 * 1024 * 1024,
-    ) -> dict:
+    ) -> dict[str, Any]:
         """
         Purpose
             Read the content of a file within the session sandbox.
